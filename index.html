@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>REST PIN API</title>
+</head>
+<body style="text-align:center;font-family:Arial;margin-top:80px;">
+
+<h1>REST API PIN Generator</h1>
+
+<h3>Endpoint: /generate-pin</h3>
+
+<button onclick="generate()">Generate PIN</button>
+
+<pre id="out">---</pre>
+
+<script>
+/**
+ * 4-digit PIN generator (REST-style simulation)
+ */
+function generatePin() {
+  return Math.floor(1000 + Math.random() * 9000);
+}
+
+/**
+ * Fake REST API handler
+ */
+function api(url) {
+
+  if (url === "/generate-pin") {
+
+    return {
+      success: true,
+      endpoint: url,
+      pin: generatePin()
+    };
+  }
+
+  return {
+    success: false,
+    error: "Invalid endpoint"
+  };
+}
+
+/**
+ * Call API
+ */
+function generate() {
+
+  const url = "/generate-pin";
+
+  const response = api(url);
+
+  document.getElementById("out").innerText =
+    JSON.stringify(response, null, 2);
+}
+</script>
+
+</body>
+</html>
